@@ -22,7 +22,7 @@ class AuthViewModel (var navController: NavHostController, var context: Context)
                         val userdata = User(fullName, email, password, confirmPassword, auth.currentUser!!.uid)
                         // Save user data to database
                         val database = FirebaseDatabase.getInstance().getReference("users").
-                        child("Users"+auth.currentUser!!.uid)
+                        child("Users/"+auth.currentUser!!.uid)
                         database.setValue(userdata).addOnCompleteListener {
                             if (it.isSuccessful) {
                                 Toast.makeText(context, "Account created successfully", Toast.LENGTH_SHORT).show()

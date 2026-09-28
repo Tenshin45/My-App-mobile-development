@@ -32,8 +32,8 @@ import kotlin.time.Duration.Companion.milliseconds
 @Composable
 fun SplashScreen(navController: NavHostController) {
     LaunchedEffect(true) {
-        delay(2000.ghjmilliseconds)//2 seconds delay
-        navController.navigate("dashboard_screen")
+        delay(2000.milliseconds)//2 seconds delay
+        navController.navigate("register_screen")
     }
     Column(
         modifier = Modifier

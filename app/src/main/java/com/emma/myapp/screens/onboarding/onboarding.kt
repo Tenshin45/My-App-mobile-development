@@ -11,12 +11,11 @@ import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun OnboardingScreen(navController: NavHostController) {
-    if (pagerState.currentPage == onboardingItems.lastIndex) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize(),
-            horizontalArrangement = Arrangement.Center
-        ) { }
+    Row(
+        modifier = Modifier.fillMaxSize(),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        // Add your onboarding screens here
     }
 }
 @Preview

@@ -38,7 +38,6 @@ import androidx.navigation.compose.rememberNavController
 fun LoginScreen(navController: NavHostController) {
     Column(modifier = Modifier
         .fillMaxSize()
-        .padding(16.dp)
         .background(color = Color.LightGray)
         .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
