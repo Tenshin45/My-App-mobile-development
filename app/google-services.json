@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "800280595363",
+    "project_id": "my-appemm",
+    "storage_bucket": "my-appemm.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800280595363:android:5e4098ce2304c4b3f42816",
+        "android_client_info": {
+          "package_name": "com.emma.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZkjmRhkRoPMNlXEK_mA6gNr8i32PceR0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,49 @@
+package com.emma.myapp.ViewModel
+import android.content.Context
+import android.widget.Toast
+import androidx.navigation.NavHostController
+import com.emma.myapp.screens.models.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+
+class AuthViewModel (var navController: NavHostController, var context: Context) {
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
+    // Create a new user with email and password
+    fun createUser(fullName: String, email: String, password: String, confirmPassword: String) {
+        if (email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
+            Toast.makeText(context, "Email and password can't be blank", Toast.LENGTH_SHORT).show()
+        }else if (password != confirmPassword) {
+            Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()
+        }else {
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val userdata = User(fullName, email, password, confirmPassword, auth.currentUser!!.uid)
+                        // Save user data to database
+                        val database = FirebaseDatabase.getInstance().getReference("users").
+                        child("Users"+auth.currentUser!!.uid)
+                        database.setValue(userdata).addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                Toast.makeText(context, "Account created successfully", Toast.LENGTH_SHORT).show()
+                                // Navigate to Log in screen
+                                navController.navigate("login_screen")
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "${it.exception?.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                navController.navigate("register_screen")
+                            }
+                        }
+                    }else{
+                        Toast.makeText(context, "${it.exception?.message}", Toast.LENGTH_SHORT).show()
+                        navController.navigate("register_screen")
+                    }
+                }
+        }
+        // Sign in with email and password
+        // Sign out function
+    }
+}
