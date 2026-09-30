@@ -5,5 +5,10 @@ data class User(
     val email: String = "",
     val password: String = "",
     val confirmPassword: String = "",
-    val userId: String = ""
+    val userId: String = "",
+    val userRole: String = "User"
+)
+data class UserLogin(
+    val email: String = "",
+    val password: String = ""
 )

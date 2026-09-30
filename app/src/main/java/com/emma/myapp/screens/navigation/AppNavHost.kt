@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.emma.myapp.screens.UserDashboard.UserDashboard
 import com.emma.myapp.screens.dashboard.DashboardScreen
 import com.emma.myapp.screens.login.LoginScreen
 import com.emma.myapp.screens.onboarding.OnboardingScreen
@@ -38,5 +39,9 @@ fun AppNavHost(
         composable(ROUTE_ONBOARDING_SCREEN) {
             OnboardingScreen(navController)
         }
+        composable(ROUTE_USER_DASHBOARD) {
+            UserDashboard(navController)
+        }
     }
+
 }

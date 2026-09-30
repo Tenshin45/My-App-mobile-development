@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.emma.myapp.ViewModel.AuthViewModel
 
 @Composable
 fun LoginScreen(navController: NavHostController) {
@@ -81,7 +83,9 @@ fun LoginScreen(navController: NavHostController) {
             }
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { /*TODO*/ },
+        val context = LocalContext.current
+        val authViewModel = AuthViewModel(navController, context)
+        Button(onClick = { authViewModel.signInUser(Email, Password) },
             modifier = Modifier
                 .fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(

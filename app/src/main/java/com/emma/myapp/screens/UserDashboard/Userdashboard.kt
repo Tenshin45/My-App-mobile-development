@@ -1,18 +1,18 @@
-package com.emma.myapp.screens.dashboard
+package com.emma.myapp.screens.UserDashboard
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
@@ -25,28 +25,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.emma.myapp.ViewModel.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashboardScreen(navController: NavHostController) {
+fun UserDashboard(navController: NavHostController) {
+    val context = LocalContext.current
+    val authViewModel = AuthViewModel(navController, context)
     Scaffold(
-        topBar = {
+        topBar ={
             TopAppBar(
-                title = { Text("Dashboard") },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Gray,
-
-                ),
+                title = { Text("User Dashboard") },
                 actions = {
                     //IconButton(onClick = {  }) {
-                      //  Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.White)
+                    //  Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.White)
                     //}
                     IconButton(onClick = {  }) {
                         Icon(Icons.Default.Settings, contentDescription = "Settings", )
@@ -54,45 +50,39 @@ fun DashboardScreen(navController: NavHostController) {
                     IconButton({}) {
                         Icon(Icons.Default.Person, contentDescription = "Person", )
                     }
-                    IconButton(onClick = {  }) {
+                    IconButton(onClick = {authViewModel.signOutUser()}) {
                         Icon(Icons.Default.ExitToApp, contentDescription = "Logout", )
                     }
                 }
             )
         },
-       bottomBar = {
-           NavigationBar(
+        bottomBar = {
+            //Bottom Navigation
+            NavigationBar() {
+                //Bottom Navigation Items
+                NavigationBarItem(
+                    selected = true,
+                    onClick = { /*TODO*/ },
+                    label = { Text("Home") },
+                    icon = { Icon(Icons.Default.Home, contentDescription = "Home") }
 
-           ) {
-               NavigationBarItem(
-                   selected = true,
-                   onClick = { /*TODO*/ },
-                   label = { Text("Home") },
-                   icon = { Icon(Icons.Default.Home, contentDescription = "Home") }
-
-               )
-               NavigationBarItem(
-                   selected = false,
-                   onClick = { /*TODO*/ },
-                   label = { Text("Search") },
-                   icon = { Icon(Icons.Default.Search, contentDescription = "Search") }
-               )
-               NavigationBarItem(
-                   selected = false,
-                   onClick = { /*TODO*/ },
-                   label = { Text("Dashboard") },
-                   icon = { Icon(Icons.Default.Dashboard, contentDescription = "Dashboard") }
-               )
-
-           }
-       },
-        //FloatingActionButton
-        floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ }) {
-                Icon(Icons.Default.Add, contentDescription = "Logout")
+                )
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { /*TODO*/ },
+                    label = { Text("Search") },
+                    icon = { Icon(Icons.Default.Search, contentDescription = "Search") }
+                )
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { /*TODO*/ },
+                    label = { Text("Dashboard") },
+                    icon = { Icon(Icons.Default.Dashboard, contentDescription = "Dashboard") }
+                )
             }
-       }
-    ){ innerPadding ->
+        }
+    ) {
+        innerPadding ->
         //Column
         Column(
             modifier = Modifier
@@ -100,16 +90,17 @@ fun DashboardScreen(navController: NavHostController) {
                 .padding(innerPadding),
             horizontalAlignment = CenterHorizontally
         )
-        { Text("Welcome to the Dashboard",
-            fontSize = 20.sp
+        {
+            Text(
+                "Welcome to the User Dashboard",
             )
         }
     }
 }
 @Preview(showBackground = true)
 @Composable
-fun DashboardScreenPreview() {
-    DashboardScreen(rememberNavController())
+fun UserDashboardPreview() {
+  UserDashboard(rememberNavController())
 }
 //
 //

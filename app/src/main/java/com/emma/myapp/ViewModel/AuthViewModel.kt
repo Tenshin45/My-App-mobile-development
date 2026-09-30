@@ -9,6 +9,7 @@ import com.google.firebase.database.FirebaseDatabase
 class AuthViewModel (var navController: NavHostController, var context: Context) {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
+
     // Create a new user with email and password
     fun createUser(fullName: String, email: String, password: String, confirmPassword: String) {
         if (email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
@@ -19,7 +20,7 @@ class AuthViewModel (var navController: NavHostController, var context: Context)
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        val userdata = User(fullName, email, password, confirmPassword, auth.currentUser!!.uid)
+                        val userdata = User(fullName, email, password, confirmPassword, auth.currentUser!!.uid, "User")
                         // Save user data to database
                         val database = FirebaseDatabase.getInstance().getReference("users").
                         child("Users/"+auth.currentUser!!.uid)
@@ -46,4 +47,32 @@ class AuthViewModel (var navController: NavHostController, var context: Context)
         // Sign in with email and password
         // Sign out function
     }
+    fun signInUser(email: String, password: String){
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+            if (it.isSuccessful){
+                val database = auth.currentUser?.uid
+                    FirebaseDatabase.getInstance().getReference("users")
+                        .child("Users/$database").get()
+                        .addOnSuccessListener { snapshot -> val role =snapshot.child("role").value.toString()
+                            if (role == "Admin"){
+                                navController.navigate("dashboard_screen")
+                            }else{
+                                navController.navigate("user_dashboard")
+                            }
+                            Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
+                        }
+                Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
+                navController.navigate("dashboard_screen")
+            }else{
+                Toast.makeText(context,it.exception?.message?:"error logging", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    fun signOutUser() {
+        auth.signOut()
+        Toast.makeText(context, "Logout successful", Toast.LENGTH_SHORT).show()
+        navController.navigate("login_screen")
+
+    }
+
 }
