@@ -1,6 +1,6 @@
 package com.emma.myapp.screens.UserDashboard
 
-import androidx.compose.foundation.layout.Arrangement
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,7 +11,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.BottomAppBar
+
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -20,11 +20,11 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
@@ -45,20 +45,20 @@ fun UserDashboard(navController: NavHostController) {
                     //  Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.White)
                     //}
                     IconButton(onClick = {  }) {
-                        Icon(Icons.Default.Settings, contentDescription = "Settings", )
+                        Icon(Icons.Default.Settings, contentDescription = "Settings" )
                     }
-                    IconButton({}) {
-                        Icon(Icons.Default.Person, contentDescription = "Person", )
+                    IconButton({  }) {
+                        Icon(Icons.Default.Person, contentDescription = "Person" )
                     }
                     IconButton(onClick = {authViewModel.signOutUser()}) {
-                        Icon(Icons.Default.ExitToApp, contentDescription = "Logout", )
+                        Icon(Icons.Default.ExitToApp, contentDescription = "Logout" )
                     }
                 }
             )
         },
         bottomBar = {
             //Bottom Navigation
-            NavigationBar() {
+            NavigationBar {
                 //Bottom Navigation Items
                 NavigationBarItem(
                     selected = true,

@@ -12,7 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
+
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -52,12 +52,12 @@ fun LoginScreen(navController: NavHostController) {
             fontFamily = FontFamily.Serif
             )
         Spacer(modifier = Modifier.height(16.dp))
-        var Email by remember { mutableStateOf("") }
-        var Password by remember { mutableStateOf("") }
+        var email by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
-            value = Email,
-            onValueChange = { Email = it },
+            value = email,
+            onValueChange = { email = it },
             label = { Text("Email") },
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
@@ -70,8 +70,8 @@ fun LoginScreen(navController: NavHostController) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
-            value = Password,
-            onValueChange = { Password = it },
+            value = password,
+            onValueChange = { password = it },
             label = { Text("Password") },
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
@@ -85,7 +85,7 @@ fun LoginScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(16.dp))
         val context = LocalContext.current
         val authViewModel = AuthViewModel(navController, context)
-        Button(onClick = { authViewModel.signInUser(Email, Password) },
+        Button(onClick = { authViewModel.signInUser(email, password) },
             modifier = Modifier
                 .fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(

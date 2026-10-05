@@ -1,16 +1,28 @@
 package com.emma.myapp.screens.dashboard
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Dashboard
-import androidx.compose.material.icons.filled.ExitToApp
+
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
+
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -22,9 +34,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -32,78 +51,134 @@ import androidx.compose.ui.unit.sp
 
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.emma.myapp.ViewModel.AuthViewModel
+import com.emma.myapp.screens.navigation.ROUTE_ADD_PRODUCT
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(navController: NavHostController) {
+    val context= LocalContext.current
+    val myAuth= AuthViewModel(navController,context)
     Scaffold(
+
+        //topbar
         topBar = {
             TopAppBar(
-                title = { Text("Dashboard") },
+                title={Text("Dashboard")},
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Gray,
-
+                    containerColor = Color.Cyan,
+                    titleContentColor = Color.Blue
                 ),
                 actions = {
-                    //IconButton(onClick = {  }) {
-                      //  Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.White)
-                    //}
-                    IconButton(onClick = {  }) {
-                        Icon(Icons.Default.Settings, contentDescription = "Settings", )
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Default.Settings,
+                            contentDescription = "icon")
                     }
-                    IconButton({}) {
-                        Icon(Icons.Default.Person, contentDescription = "Person", )
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Default.Person,
+                            contentDescription = "icon")
                     }
-                    IconButton(onClick = {  }) {
-                        Icon(Icons.Default.ExitToApp, contentDescription = "Logout", )
+                    IconButton(onClick = { myAuth.signOutUser()}) {
+                        Icon(
+                            Icons.AutoMirrored.Filled.ExitToApp,
+                            contentDescription = "icon")
                     }
                 }
             )
         },
-       bottomBar = {
-           NavigationBar(
-
-           ) {
-               NavigationBarItem(
-                   selected = true,
-                   onClick = { /*TODO*/ },
-                   label = { Text("Home") },
-                   icon = { Icon(Icons.Default.Home, contentDescription = "Home") }
-
-               )
-               NavigationBarItem(
-                   selected = false,
-                   onClick = { /*TODO*/ },
-                   label = { Text("Search") },
-                   icon = { Icon(Icons.Default.Search, contentDescription = "Search") }
-               )
-               NavigationBarItem(
-                   selected = false,
-                   onClick = { /*TODO*/ },
-                   label = { Text("Dashboard") },
-                   icon = { Icon(Icons.Default.Dashboard, contentDescription = "Dashboard") }
-               )
-
-           }
-       },
-        //FloatingActionButton
-        floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ }) {
-                Icon(Icons.Default.Add, contentDescription = "Logout")
+        //bottom bar
+        bottomBar = {
+            NavigationBar(
+                containerColor = Color.Cyan
+            ) {
+                NavigationBarItem(
+                    selected = true,
+                    onClick = {},
+                    icon = {
+                        Icon(Icons.Default.Home,
+                            contentDescription = "home icon")
+                    },
+                    label={Text("HOME")}
+                )
+                NavigationBarItem(
+                    selected = false,
+                    onClick = {},
+                    icon = {
+                        Icon(Icons.Default.Settings,
+                            contentDescription = "settings icon")
+                    },
+                    label={Text("Settings")}
+                )
+                NavigationBarItem(
+                    selected = false,
+                    onClick = {},
+                    icon = {
+                        Icon(Icons.Default.Person,
+                            contentDescription = "person icon")
+                    },
+                    label={Text("Profile")}
+                )
             }
-       }
-    ){ innerPadding ->
-        //Column
+        },
+        //floating action button
+        floatingActionButton = {
+            FloatingActionButton(onClick = {}) {
+                Icon(Icons.Default.Add,
+                    contentDescription = "add icon")
+            }
+        }
+
+    )
+
+    {
+            innerpadding ->
+        //column
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(innerPadding),
-            horizontalAlignment = CenterHorizontally
-        )
-        { Text("Welcome to the Dashboard",
-            fontSize = 20.sp
+                .padding(innerpadding)
+                .background(color=Color.White)
+                .fillMaxSize(),
+            horizontalAlignment = CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+
+        ) {
+            var username  by remember { mutableStateOf("loading ..") }
+            LaunchedEffect(Unit) {
+                myAuth.getCurrentUserName { username=it }
+            }
+            Text("welcome $username !",
+                fontSize = 28.sp,
+                color=Color.Blue
             )
+            Spacer(modifier = Modifier.height(16.dp))
+            //row
+            Row {
+                DashboardCard(
+                    title = "Add product",
+                    background = Color.Green,
+                    onClick = {navController.navigate(ROUTE_ADD_PRODUCT)}
+                )
+                DashboardCard(
+                    title="Profile",
+                    background = Color.Cyan,
+                    onClick = {}
+                )
+            }
+            Row {
+                DashboardCard(
+                    title = "Product list",
+                    background = Color.Gray,
+                    onClick = {})
+                DashboardCard(
+                    title = "User-Dashboard",
+                    background = Color.Magenta,
+                    onClick = {})
+            }
+
+
         }
+
+
     }
 }
 @Preview(showBackground = true)
@@ -113,3 +188,43 @@ fun DashboardScreenPreview() {
 }
 //
 //
+
+//dashboard card
+@Composable
+fun DashboardCard(
+    title: String,
+    background: Color,
+    onClick:()-> Unit)
+{
+    Card(
+        modifier = Modifier
+            .height(150.dp)
+            .width(150.dp)
+            .padding(8.dp)
+            .clickable{onClick()},
+        colors = CardDefaults.cardColors(
+            containerColor = background
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text = title,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color=Color.Black)
+        }
+    }
+}
+@Preview(showBackground = true)
+@Composable
+fun DashboardCardPreview(){
+    DashboardCard(
+        title = "My App",
+        background = Color.DarkGray,
+        onClick = {}
+    )
+}

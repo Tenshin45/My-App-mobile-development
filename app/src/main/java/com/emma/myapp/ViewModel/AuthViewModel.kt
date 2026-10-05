@@ -51,7 +51,7 @@ class AuthViewModel (var navController: NavHostController, var context: Context)
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if (it.isSuccessful){
                 val database = auth.currentUser?.uid
-                    FirebaseDatabase.getInstance().getReference("users")
+                FirebaseDatabase.getInstance().getReference("users")
                         .child("Users/$database").get()
                         .addOnSuccessListener { snapshot -> val role =snapshot.child("role").value.toString()
                             if (role == "Admin"){
@@ -73,6 +73,22 @@ class AuthViewModel (var navController: NavHostController, var context: Context)
         Toast.makeText(context, "Logout successful", Toast.LENGTH_SHORT).show()
         navController.navigate("login_screen")
 
+    }
+    //get current username function
+    fun getCurrentUserName(onResult:(String) ->Unit){
+        val userId=auth.currentUser?.uid
+        if (userId==null) {
+            onResult("user")
+            return
+        }
+        FirebaseDatabase.getInstance().getReference("Users")
+            .child(userId)
+            .get()
+            .addOnSuccessListener{snapshot ->
+                val fullname=snapshot.child("fullname").getValue(String::class.java)
+                onResult(fullname ?:"user")
+
+            }
     }
 
 }

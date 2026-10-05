@@ -10,6 +10,7 @@ import com.emma.myapp.screens.UserDashboard.UserDashboard
 import com.emma.myapp.screens.dashboard.DashboardScreen
 import com.emma.myapp.screens.login.LoginScreen
 import com.emma.myapp.screens.onboarding.OnboardingScreen
+import com.emma.myapp.screens.product.AddProductScreen
 import com.emma.myapp.screens.register.RegisterScreen
 import com.emma.myapp.screens.splashscreen.SplashScreen
 
@@ -41,6 +42,9 @@ fun AppNavHost(
         }
         composable(ROUTE_USER_DASHBOARD) {
             UserDashboard(navController)
+        }
+        composable(ROUTE_ADD_PRODUCT){
+            AddProductScreen(navController)
         }
     }
 
