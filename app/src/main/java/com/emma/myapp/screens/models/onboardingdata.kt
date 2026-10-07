@@ -11,17 +11,17 @@ val onboardingItems=listOf(
     OnboardingItem(
         title="welcome to opera app",
         description = "get to discover amazing products",
-        imageRes = R.drawable.logob
+        imageRes = R.drawable.omb1
     ),
     OnboardingItem(
         title="Discover  amazing products",
         description = "get to browse thousands of amzaing products",
-        imageRes = R.drawable.logoc
+        imageRes = R.drawable.onb2
     ),
     OnboardingItem(
         title="Fast and  secure delivery",
         description = "enjoy Fast ,seamless secure delivery ",
-        imageRes = R.drawable.logod
+        imageRes = R.drawable.onb3
     )
 
 )

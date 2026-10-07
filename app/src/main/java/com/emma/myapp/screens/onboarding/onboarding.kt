@@ -68,7 +68,7 @@ fun OnboardingScreen(navController: NavHostController) {
                     .height(55.dp)
                     .width(100.dp)
                 ) {
-                    Text("skip", fontSize = 18.sp,color=Color(0xFF2E7D32), fontWeight = FontWeight.Bold)
+                    Text("skip", fontSize = 18.sp,color=Color.Black, fontWeight = FontWeight.Bold)
                 }
 
             }
@@ -104,7 +104,7 @@ fun OnboardingScreen(navController: NavHostController) {
                 Text(
                     text = item.title,
                     fontSize = 26.sp,
-                    color = Color.Blue,
+                    color = Color.LightGray,
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = Modifier.height(15.dp))
@@ -133,7 +133,7 @@ fun OnboardingScreen(navController: NavHostController) {
                         )
                         .clip(CircleShape)
                         .background(
-                            if (isSelected) Color.Green else Color.LightGray
+                            if (isSelected) Color.Black else Color.LightGray
                         )
                 )
             }
@@ -153,8 +153,8 @@ fun OnboardingScreen(navController: NavHostController) {
             modifier = Modifier.fillMaxWidth()
                 .padding(horizontal = 32.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Green,
-                contentColor = Color.Blue)
+                containerColor = Color.LightGray,
+                contentColor = Color.Black)
         ) {
             Text(
                 text = if (

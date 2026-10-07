@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.navigation.NavHostController
 import com.cloudinary.Url
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -17,9 +18,17 @@ import okhttp3.RequestBody
 import java.io.InputStream
 
 class ProductViewModel(val navController: NavHostController, val context: Context) {
+    init {
+        try {
+            if (FirebaseApp.getApps(context).isEmpty()) {
+                FirebaseApp.initializeApp(context)
+            }
+        } catch (_: Exception) {
+        }
+    }
     var cloudinaryUrl = "https://api.cloudinary.com/v1_1/prf7lupw/upload/"
     var uploadedPreset = "MyAppProduct"
-    var databaseReference = FirebaseDatabase.getInstance().getReference("products")
+    val databaseReference by lazy { FirebaseDatabase.getInstance().getReference("products") }
     fun addProduct(name: String, price: String, description: String, imageUri: Uri?){
         val ref = databaseReference.push()
         val currentUser = FirebaseAuth.getInstance().currentUser

@@ -3,11 +3,29 @@ import android.content.Context
 import android.widget.Toast
 import androidx.navigation.NavHostController
 import com.emma.myapp.screens.models.User
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
 class AuthViewModel (var navController: NavHostController, var context: Context) {
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    init {
+        try {
+            if (FirebaseApp.getApps(context).isEmpty()) {
+                FirebaseApp.initializeApp(context)
+            }
+        } catch (_: Exception) {
+            // Ignore if initialization fails in preview
+        }
+    }
+
+    private val auth: FirebaseAuth by lazy {
+        try {
+            FirebaseAuth.getInstance()
+        } catch (e: Exception) {
+            FirebaseApp.initializeApp(context)
+            FirebaseAuth.getInstance()
+        }
+    }
 
 
     // Create a new user with email and password

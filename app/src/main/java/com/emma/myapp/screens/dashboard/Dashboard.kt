@@ -66,8 +66,8 @@ fun DashboardScreen(navController: NavHostController) {
             TopAppBar(
                 title={Text("Dashboard")},
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Cyan,
-                    titleContentColor = Color.Blue
+                    containerColor = Color.Gray,
+                    titleContentColor = Color.White
                 ),
                 actions = {
                     IconButton(onClick = {}) {
@@ -89,7 +89,7 @@ fun DashboardScreen(navController: NavHostController) {
         //bottom bar
         bottomBar = {
             NavigationBar(
-                containerColor = Color.Cyan
+                containerColor = Color.LightGray
             ) {
                 NavigationBarItem(
                     selected = true,
@@ -98,7 +98,7 @@ fun DashboardScreen(navController: NavHostController) {
                         Icon(Icons.Default.Home,
                             contentDescription = "home icon")
                     },
-                    label={Text("HOME")}
+                    label={Text("Home")}
                 )
                 NavigationBarItem(
                     selected = false,
@@ -148,19 +148,19 @@ fun DashboardScreen(navController: NavHostController) {
             }
             Text("welcome $username !",
                 fontSize = 28.sp,
-                color=Color.Blue
+                color=Color.Black
             )
             Spacer(modifier = Modifier.height(16.dp))
             //row
             Row {
                 DashboardCard(
                     title = "Add product",
-                    background = Color.Green,
+                    background = Color.Yellow,
                     onClick = {navController.navigate(ROUTE_ADD_PRODUCT)}
                 )
                 DashboardCard(
                     title="Profile",
-                    background = Color.Cyan,
+                    background = Color.DarkGray,
                     onClick = {}
                 )
             }
@@ -171,7 +171,7 @@ fun DashboardScreen(navController: NavHostController) {
                     onClick = {})
                 DashboardCard(
                     title = "User-Dashboard",
-                    background = Color.Magenta,
+                    background = Color.LightGray,
                     onClick = {})
             }
 

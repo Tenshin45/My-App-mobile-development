@@ -33,12 +33,12 @@ import kotlin.time.Duration.Companion.milliseconds
 fun SplashScreen(navController: NavHostController) {
     LaunchedEffect(true) {
         delay(2000.milliseconds)//2 seconds delay
-        navController.navigate("register_screen")
+        navController.navigate("onboarding_screen")
     }
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+
             .background(color = Color.LightGray)
             .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
