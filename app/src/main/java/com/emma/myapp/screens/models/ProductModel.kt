@@ -5,5 +5,5 @@ data class Products(
     var name: String = "",
     var description: String = "",
     var price: String = "",
-    var imageURL: String = "",
+    var imageUrl: String = "",
 )

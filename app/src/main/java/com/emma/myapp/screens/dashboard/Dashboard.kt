@@ -142,9 +142,11 @@ fun DashboardScreen(navController: NavHostController) {
             verticalArrangement = Arrangement.Center
 
         ) {
-            var username  by remember { mutableStateOf("loading ..") }
-            LaunchedEffect(Unit) {
-                myAuth.getCurrentUserName { username=it }
+            var username by remember { mutableStateOf("") }
+            LaunchedEffect(key1 = true) {
+                myAuth.getCurrentUserName { name ->
+                    username = name
+                }
             }
             Text("welcome $username !",
                 fontSize = 28.sp,
@@ -168,7 +170,7 @@ fun DashboardScreen(navController: NavHostController) {
                 DashboardCard(
                     title = "Product list",
                     background = Color.Gray,
-                    onClick = {})
+                    onClick = {navController.navigate("view_product")})
                 DashboardCard(
                     title = "User-Dashboard",
                     background = Color.LightGray,

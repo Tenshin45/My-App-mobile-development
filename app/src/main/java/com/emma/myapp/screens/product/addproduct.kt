@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,6 +42,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.emma.myapp.R
+import com.emma.myapp.ViewModel.ProductViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,7 +52,8 @@ fun AddProductScreen(navController: NavHostController) {
             TopAppBar(
                 title = { Text("ADD PRODUCT") },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Gray
+                    containerColor = Color.Gray,
+                    titleContentColor = Color.White
                 )
 
             )
@@ -67,7 +70,7 @@ fun AddProductScreen(navController: NavHostController) {
             Text("ADD A NEW PRODUCT",
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
-                color=Color.Blue)
+                color=Color.Black)
             Spacer(modifier= Modifier.height(20.dp))
             var productName by remember { mutableStateOf("") }
             var description by remember { mutableStateOf("") }
@@ -118,10 +121,21 @@ fun AddProductScreen(navController: NavHostController) {
             OutlinedButton(onClick ={imagePickerLauncher.launch("image/*")}) {
                 Text("Pick an image")
             }
-
-
+            Spacer(modifier= Modifier.height(20.dp))
+            val context= LocalContext.current
+            val productViewModel= ProductViewModel(navController, context)
             Button(
-                onClick = {},
+                onClick = {productViewModel.addProduct(
+                    name = productName,
+                    price=price,
+                    description=description,
+                    imageUri=imageUri
+                )
+                    productName=""
+                    description=""
+                    price=""
+                    imageUri=null
+                          },
                 colors= ButtonDefaults.buttonColors(
                     containerColor =  Color.DarkGray
                 ),
