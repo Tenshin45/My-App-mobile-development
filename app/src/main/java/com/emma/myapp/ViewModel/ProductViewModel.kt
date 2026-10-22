@@ -19,6 +19,8 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -133,13 +135,47 @@ class ProductViewModel(val navController: NavHostController, val context: Contex
     }
     //u-update
     //update existing product in firebase
-    fun updateProduct(){
+    fun updateProduct(productId: String, name: String, price: String, description: String, imageUri: Uri?){
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val newImageUrl=imageUri?.let{uploadImageToCloudinary(context,it)}
+                val currentUser= FirebaseAuth.getInstance().currentUser
+                val userId=currentUser?.uid ?: ""
+                val updates= mutableMapOf<String, Any>(
+                    "id" to productId,
+                    "name" to name,
+                    "price" to price,
+                    "description" to description,
+                    "userId" to userId
+                )
+                if (!newImageUrl.isNullOrEmpty()){
+                    updates["imageUrl"]=newImageUrl
+                }
+                databaseReference.child(productId).updateChildren(updates).await()
+                withContext(Dispatchers.Main){
+                    Toast.makeText(context,"Product updated successfully", Toast.LENGTH_LONG).show()
+                    navController.navigate(ROUTE_VIEW_PRODUCT)
+                }
 
+            }catch (e: Exception){
+                withContext(Dispatchers.Main){
+                    Toast.makeText(context,"Update failed:${e.message}", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
     //d-delete
     //delete  product in realtime database
-    fun deleteProduct(){
-
+    fun deleteProduct( productId: String ){
+        databaseReference.child(productId).removeValue().addOnCompleteListener {
+            if (it.isSuccessful){
+                Toast.makeText(context,"Product deleted successfully", Toast.LENGTH_LONG).show()
+                navController.navigate(ROUTE_VIEW_PRODUCT)
+            }
+            else{
+                Toast.makeText(context,"Error: ${it.exception?.message}", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
 

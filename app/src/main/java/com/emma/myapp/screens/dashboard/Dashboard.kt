@@ -111,7 +111,7 @@ fun DashboardScreen(navController: NavHostController) {
                 )
                 NavigationBarItem(
                     selected = false,
-                    onClick = {},
+                    onClick = {navController.navigate("profile_screen")},
                     icon = {
                         Icon(Icons.Default.Person,
                             contentDescription = "person icon")
@@ -161,9 +161,9 @@ fun DashboardScreen(navController: NavHostController) {
                     onClick = {navController.navigate(ROUTE_ADD_PRODUCT)}
                 )
                 DashboardCard(
-                    title="Profile",
+                    title="Intent",
                     background = Color.DarkGray,
-                    onClick = {}
+                    onClick = {navController.navigate("intent_screen")}
                 )
             }
             Row {

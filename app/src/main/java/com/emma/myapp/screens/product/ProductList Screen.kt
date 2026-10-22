@@ -41,6 +41,8 @@ import coil.compose.AsyncImage
 import com.emma.myapp.ViewModel.ProductViewModel
 import com.emma.myapp.screens.models.Products
 import com.emma.myapp.screens.navigation.ROUTE_ADD_PRODUCT
+import com.emma.myapp.screens.navigation.ROUTE_UPDATE_PRODUCT
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductListScreen(
@@ -131,7 +133,7 @@ fun ProductListScreen(
                             .align(CenterHorizontally)
                     ) {
                         Button(
-                            onClick = {},
+                            onClick = {navController.navigate("$ROUTE_UPDATE_PRODUCT/${item.id}")},
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color.Yellow,
                                 contentColor = Color.White
@@ -140,7 +142,7 @@ fun ProductListScreen(
                             Text("Update")
                         }
                         Button(
-                            onClick = {},
+                            onClick = {  },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color.Green,
                                 contentColor = Color.White
@@ -149,7 +151,7 @@ fun ProductListScreen(
                             Text("Buy")
                         }
                         Button(
-                            onClick = {},
+                            onClick = {productViewModel.deleteProduct(item.id)},
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color.Red,
                                 contentColor = Color.White

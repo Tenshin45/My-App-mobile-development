@@ -103,9 +103,32 @@ class AuthViewModel (var navController: NavHostController, var context: Context)
             .child(userId)
             .get()
             .addOnSuccessListener{snapshot ->
-                val fullname=snapshot.child("fullname").getValue(String::class.java)
-                onResult(fullname ?:"user")
+                val username=snapshot.child("fullName").getValue(String::class.java)
+                onResult(username ?:"user")
+            }
+    }
+    //get current profile function
+    fun getCurrentProfile(onResult: (String) -> Unit) {
+        val userId = auth.currentUser?.uid
 
+        if (userId == null) {
+            onResult("User's not available")
+            return
+        }
+
+        FirebaseDatabase.getInstance()
+            .getReference("users")
+            .child("Users")
+            .child(userId)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                val fullName = snapshot.child("fullName")
+                    .getValue(String::class.java)
+
+                onResult(fullName ?: "User's name unavailable")
+            }
+            .addOnFailureListener {
+                onResult("Error retrieving profile data")
             }
     }
 

@@ -87,14 +87,14 @@ fun AddProductScreen(navController: NavHostController) {
                 label={Text("Enter product name")},
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier= Modifier.height(20.dp))
+            Spacer(modifier= Modifier.height(16.dp))
             OutlinedTextField(
                 value = description,
                 onValueChange = {description=it},
                 label={Text("Enter product description")},
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier= Modifier.height(20.dp))
+            Spacer(modifier= Modifier.height(16.dp))
             OutlinedTextField(
                 value = price,
                 onValueChange = {price=it},
@@ -102,10 +102,9 @@ fun AddProductScreen(navController: NavHostController) {
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
-            Spacer(modifier= Modifier.height(20.dp))
+            Spacer(modifier= Modifier.height(16.dp))
             //image preview
             Card(
-                shape= CircleShape,
                 modifier= Modifier
                     .size(140.dp)
                     .clickable{imagePickerLauncher.launch("image/*")}

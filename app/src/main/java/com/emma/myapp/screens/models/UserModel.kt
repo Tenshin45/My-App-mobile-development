@@ -8,7 +8,3 @@ data class User(
     val userId: String = "",
     val userRole: String = "User"
 )
-data class UserLogin(
-    val email: String = "",
-    val password: String = ""
-)
